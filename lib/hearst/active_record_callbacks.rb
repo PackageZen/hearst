@@ -1,10 +1,9 @@
 module Hearst
   class ActiveRecordCallbacks
-    extend ActiveSupport::Concern
 
-    included do
-      after_commit :post_create, on: :create
-      after_commit :post_update, on: :update
+    def self.included(base)
+      base.after_commit :post_create, on: :create
+      base.after_commit :post_update, on: :update
     end
 
     def post_create
