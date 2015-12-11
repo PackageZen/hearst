@@ -5,3 +5,6 @@ machine:
 database:
   override:
     - bundle exec rake -T # do nothing, this overrides the default db actions from CircleCI
+test:
+  override:
+    - RAILS_ENV=test bundle exec rspec -r rspec_junit_formatter --format RspecJunitFormatter -o $CIRCLE_TEST_REPORTS/rspec/junit.xml
