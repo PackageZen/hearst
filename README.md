@@ -1,6 +1,8 @@
 # Hearst
 
-Hearst is a ruby library meant to aide in the publishing and subscribing to events from RabbitMQ in a declarative way. 
+[![Circle CI](https://circleci.com/gh/PackageZen/hearst.svg?style=svg&circle-token=60466a464e84b27f1c78ab0e75545567db0ee9c4)](https://circleci.com/gh/PackageZen/hearst)
+
+Hearst is a ruby library meant to aide in the publishing and subscribing to events from RabbitMQ in a declarative way.
 
 ## Installation
 
