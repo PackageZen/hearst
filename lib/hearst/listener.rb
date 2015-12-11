@@ -4,28 +4,46 @@ module Hearst
     attr_reader :connection
 
     def initialize
-      @connection = Bunny.new(ENV['AMQP'])
+      @connection = Bunny.new(ENV['AMQP_HOST'])
     end
 
     def listen
       connection.start
 
-      channel = connection.create_channel
-      channel.prefetch(1)
-
-      # parse out queues, exchanges they should bind to, and keys they should listen for
-      # hydrate a class based on routing key name from app/subscribers
-
-      queue = channel.queue(ENV['EXCHANGE_NAME'],
-                            durable: true,
-                            auto_delete: false)
-
-      queue.bind(channel.topic('pz.core'), routing_key: 'foo')
+      subscribers.each do |subscriber|
+        queue.bind(channel.topic(subscriber.exchange, routing_key: subscriber.event))
+      end
 
       queue.subscribe(manual_ack: true) do |delivery_info, metadata, payload|
-        puts "Received message: #{payload}"
-        channel.acknowledge(delivery_info.delivery_tag)
+        subscriber = subscriber_for(event: delivery_info.routing_key, exchange: delivery_info.exchange)
+        if subscriber && subscriber.process(payload)
+          channel.acknowledge(delivery_info.delivery_tag)
+        else
+          channel.nack(delivery_info.delivery_tag, false, true)
+        end
       end
+    end
+
+    def subscriber_for(event:, exchange:)
+      subscribers.select { |sub| sub.exchange == exchange && sub.event == event }.first
+    end
+
+    def channel
+      @channel ||= connection.create_channel.tap do |chnl|
+        chnl.prefetch(1)
+      end
+    end
+
+    def queue
+      @queue ||= channel.queue(exchange_name, durable: true, auto_delete: false)
+    end
+
+    def exchange_name
+      ENV['EXCHANGE_NAME']
+    end
+
+    def subscribers
+      Hearst.subscribers
     end
 
   end

@@ -3,16 +3,20 @@ module Hearst
 
     def self.included(base)
       base.extend(ClassMethods)
-      base.class_attribute :subscribes_to
-      base.class_attribute :subscribes_from
+      base.class_attribute :event
+      base.class_attribute :exchange
 
       Hearst.register!(base)
     end
 
     module ClassMethods
-      def subscribes(to:, from:)
-        self.subscribes_to = to
-        self.subscribes_from = from
+      def subscribes(event:, exchange:)
+        self.event = event
+        self.exchange = exchange
+      end
+
+      def process(payload)
+        raise NotImplementedError
       end
     end
   end
