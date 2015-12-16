@@ -1,5 +1,5 @@
 module Hearst
-  class ActiveRecordCallbacks
+  module ActiveRecordCallbacks
 
     def self.included(base)
       base.after_commit :post_create, on: :create
