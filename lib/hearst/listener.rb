@@ -11,7 +11,7 @@ module Hearst
       connection.start
 
       subscribers.each do |subscriber|
-        queue.bind(channel.topic(subscriber.exchange, routing_key: subscriber.event))
+        queue.bind(channel.topic(subscriber.exchange, routing_key: subscriber.event || exchange_name))
       end
 
       queue.subscribe(manual_ack: true) do |delivery_info, metadata, payload|
@@ -25,7 +25,7 @@ module Hearst
     end
 
     def subscriber_for(event:, exchange:)
-      subscribers.select { |sub| sub.exchange == exchange && sub.event == event }.first
+      subscribers.select { |sub| sub.exchange == (exchange || exchange_name) && sub.event == event }.first
     end
 
     def channel
