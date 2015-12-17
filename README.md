@@ -20,6 +20,10 @@ Or install it yourself as:
 
     $ gem install hearst
 
+## Requirements
+
+Hearst supports Ruby 2.0+
+
 ## Usage
 
 Using Hearst is pretty easy. It requires two environment variables, `AMQP_HOST` and `EXCHANGE_NAME`
