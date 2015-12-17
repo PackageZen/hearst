@@ -24,7 +24,7 @@ module Hearst
       end
     end
 
-    def subscriber_for(event:, exchange:)
+    def subscriber_for(event: nil, exchange: nil)
       subscribers.select { |sub| sub.exchange == (exchange || exchange_name) && sub.event == event }.first
     end
 
