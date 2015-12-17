@@ -4,7 +4,7 @@ describe Hearst::Subscriber do
 
   class TestSubscriber
     include Hearst::Subscriber
-    subscribes event: 'foo/bar', exchange: 'foo-exchange'
+    subscribes_to 'foo.bar', exchange: 'foo-exchange'
   end
 
   it 'auto-registers itself with Hearst' do
@@ -12,7 +12,7 @@ describe Hearst::Subscriber do
   end
 
   it 'stores event and exchange configuration on class' do
-    expect(TestSubscriber.event).to eq('foo/bar')
+    expect(TestSubscriber.event).to eq('foo.bar')
     expect(TestSubscriber.exchange).to eq('foo-exchange')
   end
 

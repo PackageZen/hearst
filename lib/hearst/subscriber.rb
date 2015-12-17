@@ -10,7 +10,7 @@ module Hearst
     end
 
     module ClassMethods
-      def subscribes(event:, exchange:)
+      def subscribes_to(event, exchange: nil)
         self.event = event
         self.exchange = exchange
       end
