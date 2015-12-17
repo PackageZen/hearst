@@ -16,7 +16,7 @@ module Hearst
 
     def publish(event)
       data = respond_to?(:amqp_properties) ? amqp_properties : self
-      routing_key = "#{self.class.name.underscore}/#{event}"
+      routing_key = "#{self.class.name.underscore}.#{event}"
       Hearst.publish(routing_key, data)
     end
   end
