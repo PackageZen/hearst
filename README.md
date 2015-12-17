@@ -105,7 +105,6 @@ Hearst provides a Rake task that sets up a durable queue and registers the subsc
 $ bundle exec rake hearst:listen
 ```
 
-
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/hearst/fork )
@@ -113,3 +112,7 @@ $ bundle exec rake hearst:listen
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
+
+## Credits
+
+- Inspiration for ActiveRecord callbacks from [bellycard/napa_rabbit_publisher](https://github.com/bellycard/napa_rabbit_publisher)
