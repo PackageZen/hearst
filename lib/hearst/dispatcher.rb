@@ -21,7 +21,7 @@ module Hearst
     end
 
     def exchange
-      @exchange ||= channel.topic(exchange_name)
+      @exchange ||= channel.topic(exchange_name, durable: true, auto_delete: false)
     end
 
     def exchange_name
