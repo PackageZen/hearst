@@ -11,7 +11,7 @@ module Hearst
       connection.start
 
       subscribers.each do |subscriber|
-        queue.bind(channel.topic(subscriber.exchange, routing_key: subscriber.event || exchange_name))
+        queue.bind(exchange_for(subscriber.exchange), routing_key: subscriber.event)
       end
 
       queue.subscribe(manual_ack: true) do |delivery_info, metadata, payload|
@@ -36,6 +36,10 @@ module Hearst
 
     def queue
       @queue ||= channel.queue(exchange_name, durable: true, auto_delete: false)
+    end
+
+    def exchange_for(name)
+      channel.topic(name, durable: true, auto_delete: false)
     end
 
     def exchange_name
