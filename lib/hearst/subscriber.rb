@@ -12,7 +12,7 @@ module Hearst
     module ClassMethods
       def subscribes_to(event, exchange: nil)
         self.event = event
-        self.exchange = exchange
+        self.exchange = exchange || ENV['EXCHANGE_NAME']
       end
 
       def process(payload)

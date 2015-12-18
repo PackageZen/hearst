@@ -7,6 +7,11 @@ describe Hearst::Subscriber do
     subscribes_to 'foo.bar', exchange: 'foo-exchange'
   end
 
+  class LocalTestSubscriber
+    include Hearst::Subscriber
+    subscribes_to 'local.foo.bar'
+  end
+
   it 'auto-registers itself with Hearst' do
     expect(Hearst.subscribers).to include(TestSubscriber)
   end
@@ -20,6 +25,10 @@ describe Hearst::Subscriber do
     expect {
       TestSubscriber.process(pay: 'load')
     }.to raise_error(NotImplementedError)
+  end
+
+  it 'defaults to local exchange name from ENV if not declared' do
+    expect(LocalTestSubscriber.exchange).to eq(ENV['EXCHANGE_NAME'])
   end
 
 end
