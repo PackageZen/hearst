@@ -42,6 +42,7 @@ module Hearst
       routing_key: routing_key,
       content_type: "application/json"
     )
+    Hearst::Logging.logger.info "Hearst published event=#{routing_key}"
   end
 end
 
