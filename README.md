@@ -1,3 +1,5 @@
+**NOTE: Hearst is still in development. APIs and functionality is due to change as new use cases are provided**
+
 # Hearst
 
 [![Circle CI](https://circleci.com/gh/PackageZen/hearst.svg?style=svg)](https://circleci.com/gh/PackageZen/hearst)
