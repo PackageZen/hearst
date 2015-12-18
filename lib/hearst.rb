@@ -4,6 +4,7 @@ require "json"
 require "rake"
 
 require "hearst/version"
+require "hearst/configuration"
 require "hearst/dispatcher"
 require "hearst/listener"
 require "hearst/logging"
@@ -19,6 +20,10 @@ end
 
 module Hearst
 
+  class << self
+    attr_accessor :configuration
+  end
+
   def self.initialize!
     @@roster = Roster.new
   end
@@ -33,6 +38,11 @@ module Hearst
 
   def self.subscribers
     roster.subscribers
+  end
+
+  def self.configure
+    self.configuration ||= Configuration.new
+    yield(configuration)
   end
 
   def self.publish(routing_key, data)
